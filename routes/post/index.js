@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 
 const controller = {
-    post: require('./postController.js');
+    post: require('./postController.js'),
 };
 
 const dStorage = multer.diskStorage({
@@ -12,14 +12,14 @@ const dStorage = multer.diskStorage({
     filename: (req, file, cb) => {
         console.log(file);
         cb(null, file.originalname);
-    } 
+    }
 });
 
 const upload = multer({ storage: dStorage});
 
 const router = express.Router();
 
-router.get('/', controller.post.getPosts);
+// router.get('/', controller.post.getPosts);
 
 router.post('/:post_id', upload.any(),  controller.post.newPosts);
 
