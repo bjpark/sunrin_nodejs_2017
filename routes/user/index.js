@@ -12,8 +12,10 @@ const helper = {
 
 const router = express.Router();
 
-// router.get('/', controller.post.getuser);
+router.get('/', controller.user.checkSession);
 
 router.post('/', helper.session.sessionCheck, passport.authenticate('local'), controller.user.login);
+
+router.delete('/', controller.user.logout);
 
 module.exports = router;
