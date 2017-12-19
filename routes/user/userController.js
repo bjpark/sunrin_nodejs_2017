@@ -1,5 +1,5 @@
 const model = {
-    user: require('.userModel'),
+    user: require('./userModel'),
 }
 
 exports.login = (req, res) => {
