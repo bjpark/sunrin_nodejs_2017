@@ -2,6 +2,10 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const moment = require('moment');
 
+const model = {
+    user: require('./routes/user/userModel'),
+}
+
 module.exports = () => {
     passport.serializeUser((user, next) => {
         next(null, user); // err, sessionKey
@@ -17,11 +21,13 @@ module.exports = () => {
         passReqToCallback: true,
     }, (req, id, pw, next) => {
         console.log(id, pw);
-        if (id === 'sunrin' && pw === '123456') {
-            let user = { id, pw, date: moment().unix() };
-            return next(null, user);
-        } else {
-            return next(null, false, { message: 'Incorrect Data.'});
-        }
+        model.user.checkUser(id, pw, (err, data) => {
+            if (data) {
+                let user = { id, pw, date: moment().unix() };
+                return next(null, user);
+            } else {
+                return next(null, false, { message: 'Incorrect Data.'});
+            }
+        })
     }));
 }

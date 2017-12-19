@@ -1,3 +1,7 @@
+const model = {
+    user: require('.userModel'),
+}
+
 exports.login = (req, res) => {
     console.log("ASD");
     res.send(200, {
