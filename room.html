@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+    <head>
+	<title>Basic SocketIO Chat</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script src="//code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+	    $(document).ready(function () {
+	   	var socket = io.connect('http://localhost:4321');
+		socket.on('list', function (data) { 
+		    console.log(data);
+		    $('#userList').html(''); // clean
+		    for (var i = 0; i < data.length; i++) {
+		    	$('#userList').append('<li>' + data[i] + '</li>');
+		    }
+		});
+		$('#userMsg').keyup(function (e) {
+		    if (e.which == 13) {
+			console.log($(this).val());
+		    	socket.emit('sendMsg', $(this).val());
+			$(this).val('');
+		    }
+		});
+		socket.on('sendMsg', function (data) {
+	            console.log(data)
+		    $('#msgPool').append('<p><span class="name">' + data.name + '</span> : <span class="msg">' + data.msg +'</span></p>');
+		});
+		$('#login').click(function () {
+		    var room = $('#room').val();
+		    var clientId = $('#client').val();
+		    socket.emit('join', { room: room, client: clientId});
+		    $('#login_form').addClass('hide');
+                    $('#chat_form').removeClass('hide');   
+		});
+		socket.on('join', function () {
+		    $('#login_form').removeClass('hide');
+		    $('#chat_form').addClass('hide');
+		});
+	    });
+	</script>
+	<style>
+	    .hide {
+	    	display: none;
+	    }
+	</style>
+    </head>
+    <body>
+	<ul id="userList"></ul>
+	<div id = "login_form">
+	    <h1>로그인을 합시다</h1>
+	    <input type="text" id="client">
+	    <select id="room">
+		<option value = "room1">Room 1</option>
+		<option value = "room2">Room 2</option>
+		<option value = "room3">Room 3</option>
+	    </select>
+	    <button id="login">로그인</button>
+	</div>
+	<div id = "chat_form" class="hide">
+	    INPUT : <input type="text" id="userMsg">
+	    <button id="send">SEND MESSAGE</button>
+	    <div id="msgPool"></div>
+	</div>
+    </body>
+</html>
