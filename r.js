@@ -12,7 +12,9 @@ let apiKey = 'RGAPI-e07c6125-1c2e-407d-a853-7d8772e35335';
 let apiAuth = {'X-Riot-Token': apiKey};
 let summoner = qs.escape('이코내코아니야');
 let accountId = 208910653;
-let summonerURL = url + '/lol/match/v3/matchlists/by-account/' + accountId + '/recent?api_key='+ apiKey;
+let summonerURL = url + '
+/lol/match/v3/matchlists
+/by-account/' + accountId + '/recent?api_key='+ apiKey;
 console.log(summonerURL);
 request.get({
     url: summonerURL,
