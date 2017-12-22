@@ -20,9 +20,9 @@ let validator = (scheme, prop="body") => {
 exports.checkSession = (req, res) => {
     console.log(req.user);    
     if (req.user) {
-        res.send('SESSION CHECKED');
+        res.status(200).send('SESSION CHECKED');
     } else {
-        res.send('SESSION NOT DEFINED');
+        res.status(401).send('SESSION NOT DEFINED');
     }
 }
 

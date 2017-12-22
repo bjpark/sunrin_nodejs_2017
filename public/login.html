@@ -20,23 +20,29 @@
         </style>
         <script>
             $(document).ready(function () {
+                $.ajax({
+                    url: 'http://127.0.0.1:4321/api/user',
+                    method: 'GET'
+                }).done(function (data) {
+                    console.log(data);
+                    console.log('success');
+                    location.href = "/";
+                }).fail(function () {
+                    console.log('failed');
+                });
                 $('#submit').click(function () {
-                    var formData = new FormData();
-                    formData.append('userId', $('#userId').val());
-                    formData.append('userPw', $('#userPw').val());
                     $.ajax({
                         url: 'http://127.0.0.1:4321/api/user',
                         method: 'POST',
                         data: { userId: $('#userId').val(), userPw: $('#userPw').val() },
                         dataType: 'json',
-                    }).done(function () {
-                        console.log(arguments);
-                        console.log('success');
+                    }).done(function (data) {
+                        location.href="/";
                     }).fail(function () {
-                        console.log('failed');
+                        alert('Login Failed');
                     })
-                })
-            })
+                });
+            });
         </script>
     </head>
     <body>

@@ -19,9 +19,9 @@ const upload = multer({ storage: dStorage});
 
 const router = express.Router();
 
-// router.get('/', controller.post.getPosts);
+router.get('/', controller.post.getPosts);
 
-router.post('/:post_id', upload.any(),  controller.post.newPosts);
+// router.post('/:post_id', upload.any(),  controller.post.newPosts);
 
 module.exports = router;
 
