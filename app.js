@@ -21,6 +21,9 @@ passport_local();
 // Route
 app.use('/api/user', require('./routes/user'));
 app.use('/api/post', require('./routes/post'));
+app.get('/api/test', (req, res) => {
+    res.send('Hello Test');
+})
 
 
 
@@ -31,3 +34,5 @@ app.get('*', (req, res) => {
 app.listen(4321);
 
 console.log("open 4321");
+
+module.exports = app;
